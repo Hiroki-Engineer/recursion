@@ -11,35 +11,63 @@ MAX_ANSWER_CHANCE = 10
 
 
 def main():
-    min = _cast_num(input("Please input minimun number: "))
-    max = _cast_num(input("Please input maximum number: "))
-
-    _is_valid_min_max(min=min, max=max)
+    min, max = _input_valid_min_max()
 
     _logger.info(f"min: {min}, max: {max}")
 
     ans = random.randint(min, max)
 
-    for _ in range(MAX_ANSWER_CHANCE):
-        guess = _cast_num(input("Please input your guess number: "))
+    counter = 0
 
-        if ans == guess:
-            _logger.info("YOU WIN")
-            sys.exit()
+    while counter < MAX_ANSWER_CHANCE:
+        try:
+            guess = _input_valid_number(
+                f"Please input your guess number ({MAX_ANSWER_CHANCE - counter} chances left to answer)",
+                is_raise_exc=True,
+            )
+
+        except ValueError as e:
+            _logger.error(e)
+
+        else:
+            if ans == guess:
+                _logger.info("YOU WIN")
+                sys.exit()
+
+        counter += 1
 
     _logger.info("YOU LOSE")
 
 
-def _cast_num(string: str) -> int:
-    try:
-        return int(string)
-    except ValueError:
-        raise ValueError(f"{string} is invalid number. Please input valid number.")
+def _input_valid_min_max() -> tuple[int, int]:
+    while True:
+        min = _input_valid_number("Please input minimun number")
+        max = _input_valid_number("Please input maximum number")
+
+        if min < max:
+            return min, max
+
+        _logger.error(f"min: {min}, max: {max}, This is invalid pair.")
 
 
-def _is_valid_min_max(min: int, max: int) -> None:
-    if max <= min:
-        raise ValueError(f"min: {min}, max: {max}, This is invalid pair.")
+def _input_valid_number(message: str, is_raise_exc: bool = False) -> int:
+    while True:
+        string = input(message + " (or 'exit' to quit): ")
+
+        if string == "exit":
+            _logger.info("'exit' entered. Stop this game.")
+            sys.exit()
+
+        try:
+            return int(string)
+
+        except ValueError:
+            err_message = f"'{string}' is invalid number. Please input valid number."
+
+            if is_raise_exc:
+                raise ValueError(err_message)
+
+            _logger.error(err_message)
 
 
 if __name__ == "__main__":
