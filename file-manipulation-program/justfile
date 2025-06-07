@@ -1,0 +1,12 @@
+check:
+    uv run ruff check src
+    uv run ruff format src --check
+    uv run ty check src
+
+fix:
+    uv run ruff check src --fix
+    uv run ruff format src
+    uv run ty check src
+
+file-manipulator *args:
+    uv run python src/file_manipulator.py {{ args }}

@@ -1,0 +1,37 @@
+[project]
+name = "file-manipulator"
+version = "0.1.0"
+description = "This is the file manipulation project"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D100", # undocumented-public-module
+    "D101", # undocumented-public-class
+    "D103", # undocumented-public-function
+    "D104", # undocumented-public-package
+    "D107", # undocumented-public-init
+    "G004", # logging-f-string
+    "ANN003", # missing-type-kwargs
+    # conflict
+    "D203", # or D211
+    "D213", # or D212
+    "COM812", # conflict with formatter
+]
+
+[tool.pyright]
+include = ["src"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.13",
+    "ty>=0.0.1a8",
+    "typer>=0.16.0",
+]
