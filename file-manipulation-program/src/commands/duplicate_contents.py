@@ -10,14 +10,15 @@ app = typer.Typer()
 _logger = logging.getLogger()
 
 
-@app.command()
-def reverse(inputpath: Path, outputpath: Path) -> None:
-    _logger.info(f"inputpath: {inputpath.resolve()}\noutputpath: {outputpath.resolve()}\n")
+@app.command("duplicate-contents")
+def duplicate_contents(inputpath: Path, n: int) -> None:
+    _logger.info(f"inputpath: {inputpath.resolve()}\nn: {n}\n")
 
     validate_file_exist(inputpath)
 
     with inputpath.open("r") as f:
         content = f.read()
 
-    with outputpath.open("w") as f:
-        f.write(content[::-1])
+    with inputpath.open("w") as f:
+        for _ in range(n):
+            f.write(content)

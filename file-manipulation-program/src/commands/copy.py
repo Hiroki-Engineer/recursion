@@ -11,7 +11,7 @@ _logger = logging.getLogger()
 
 
 @app.command()
-def reverse(inputpath: Path, outputpath: Path) -> None:
+def copy(inputpath: Path, outputpath: Path) -> None:
     _logger.info(f"inputpath: {inputpath.resolve()}\noutputpath: {outputpath.resolve()}\n")
 
     validate_file_exist(inputpath)
@@ -20,4 +20,4 @@ def reverse(inputpath: Path, outputpath: Path) -> None:
         content = f.read()
 
     with outputpath.open("w") as f:
-        f.write(content[::-1])
+        f.write(content)
