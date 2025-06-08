@@ -1,7 +1,7 @@
 [project]
-name = "template"
+name = "file-converter"
 version = "0.1.0"
-description = "Add your description here"
+description = "This is the file converter"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
@@ -32,6 +32,8 @@ include = ["src"]
 
 [dependency-groups]
 dev = [
+    "markdown>=3.8",
+    "pydantic>=2.11.5",
     "ruff>=0.11.13",
     "ty>=0.0.1a8",
 ]
