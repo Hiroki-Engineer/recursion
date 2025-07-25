@@ -1,0 +1,12 @@
+check:
+    uv run ruff check src test
+    uv run ruff format src test --check
+    uv run ty check src test
+
+fix:
+    uv run ruff check src test --fix
+    uv run ruff format src test
+    uv run ty check src test
+
+test:
+    uv run pytest test
